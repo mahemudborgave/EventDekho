@@ -10,6 +10,12 @@ function MainSearch() {
         <input type="text" placeholder="what's on your mind ?" className='focus:outline-none outline-0 flex-grow ml-2 text-md'/>
         <i className="fa-solid fa-magnifying-glass p-4 bg-amber-300 rounded-full"></i>
       </div>
+
+      <div className='flex justify-center gap-2 py-6 text-sm text-[#535353]'>
+        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full border'>Technical</p>
+        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>Nontechnical</p>
+        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>social</p>
+      </div>
     </div>
   )
 }
