@@ -4,7 +4,7 @@ import {NavLink, Link} from 'react-router-dom';
 function Navbar() {
   return (
     <div className='flex justify-between px-[200px] py-6 text-md items-center'>
-        <Link to='/' className='font-bold text-xl'><img src="eventdekho-logo.png" alt="logo" className='h-20'/></Link>
+        <Link to='/' className='font-bold text-xl'><img src="./eventdekho-logo.png" alt="logo" className='h-20'/></Link>
         <ul className='flex'>
             <li>
                 <NavLink
