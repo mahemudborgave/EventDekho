@@ -8,5 +8,5 @@ bun run dev
 # Backend - server 
 ```
 bun install
-bun run dev
+bun start
 ```
