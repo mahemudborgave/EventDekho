@@ -49,7 +49,7 @@ function Navbar() {
         </ul>
         <ul >
             <Link
-            to=""
+            to="/login"
             className='inline-block mr-3 px-5 py-2 bg-[#0d0c22] rounded-full text-white' 
             >Log in
             </Link>

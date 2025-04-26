@@ -3,12 +3,13 @@ import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 import dotenv from "dotenv";
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
-function Register() {
+function Login() {
 
     const baseURL = import.meta.env.VITE_BASE_URL;
     const port = import.meta.env.VITE_PORT;
+    const navigate = useNavigate();
 
     // const [formData, setFormDatat] = useState( {
     //     name: '',
@@ -16,44 +17,26 @@ function Register() {
     //     password: ''
     // });
 
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rpassword, setRPassword] = useState('');
 
     const handleChange = (e) => {
-        if(e.target.name == 'name') {
-            setName(e.target.value);
-        }
-        else if(e.target.name == 'email') {
+        if(e.target.name == 'email') {
             setEmail(e.target.value);
         }
         else if(e.target.name == 'password') {
             setPassword(e.target.value);
         }
-        else if(e.target.name == 'rpassword') {
-            setRPassword(e.target.value);
-        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-        if (!emailRegex.test(email)) {
-            toast.warn("Please enter a valid email address.");
-            return; 
-        }
-        
         try {
-            if(password != rpassword) {
-                toast.warn("Password does not match");
-            }
-            else {
-                const res = await axios.post(`${baseURL}:${port}/login/register`, {name, email, password})
-                // console.log(res);
-                toast.success("Sign Up successful");
-            }
+            const res = await axios.post(`${baseURL}:${port}/login/login`, {email, password})
+            // console.log(res);
+            toast.success("Logged In");
+            navigate('/');
+            
         }
         catch(error) {
             if (error.response) {
@@ -73,19 +56,16 @@ function Register() {
         <>
         <div className='flex w-[900px] border absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
             <div className='w-[50%] flex justify-center items-center'>
-                <p className='text-3xl'>Welcome !</p>
+                <p className='text-3xl'>Welcome back!</p>
             </div>
             <div className='p-10'>
-                <p>Sign Up</p>
-                <p>Welcome ! Please create your account</p>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" placeholder='Enter your name' className='block' onChange={handleChange} required/>
+                <p>Log In</p>
+                <form onSubmit={handleSubmit}>                    
                     <input type="email" name="email" id="" placeholder='Enter your email' className='block' onChange={handleChange} required/>
                     <input type="password" name="password" placeholder='Enter password' className='block' onChange={handleChange} required/>
-                    <input type="password" name="rpassword" placeholder='Reenter password' className='block' onChange={handleChange} required/>
-                    <input type="submit" value="Create Account" />
+                    <input type="submit" value="Log In" />
                 </form>
-                <Link to='/login'>Login Here</Link>
+                <Link to='/register'>New User ? Register</Link>
                 
             </div>
         </div>
@@ -96,4 +76,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Login

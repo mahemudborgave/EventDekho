@@ -8,6 +8,7 @@ import Events from './pages/Events.jsx'
 import Colleges from './pages/Colleges.jsx'
 import Contact from './pages/Contact.jsx'
 import Register from './pages/Register.jsx'
+import Login from './pages/Login.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route path='/contact' element={<Contact />} />
       </Route>
       <Route path='/register' element={<Register />} />
+      <Route path='/login' element={<Login />} />
     </>
     
   )
