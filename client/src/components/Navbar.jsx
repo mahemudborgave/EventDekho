@@ -10,7 +10,7 @@ function Navbar() {
                 <NavLink
                 to="/"
                 className={({ isActive }) => 
-                    isActive ? 'text-amber-300 px-5 py-2 rounded-xl bg-[#f8c92d2f]' : 'black px-5 py-2'
+                    isActive ? 'text-amber-500 px-5 py-2 rounded-xl bg-[#f8c92d3a]' : 'black px-5 py-2'
                 }
                 >
                     Home
@@ -20,7 +20,7 @@ function Navbar() {
                 <NavLink
                 to="/events"
                 className={({ isActive }) => 
-                    isActive ? 'text-amber-300 px-5 py-2 rounded-xl bg-[#f8c92d2f]' : 'black px-5 py-2'
+                    isActive ? 'text-amber-500 px-5 py-2 rounded-xl bg-[#f8c92d3a]' : 'black px-5 py-2'
                 }
                 >
                     Events
@@ -30,7 +30,7 @@ function Navbar() {
                 <NavLink
                 to="/colleges"
                 className={({ isActive }) => 
-                    isActive ? 'text-amber-300 px-5 py-2 rounded-xl bg-[#f8c92d2f]' : 'black px-5 py-2'
+                    isActive ? 'text-amber-500 px-5 py-2 rounded-xl bg-[#f8c92d3a]' : 'black px-5 py-2'
                 }
                 >
                     Colleges
@@ -40,7 +40,7 @@ function Navbar() {
             <NavLink
                 to="/contact"
                 className={({ isActive }) => 
-                    isActive ? 'text-amber-300 px-5 py-2 rounded-xl bg-[#f8c92d2f]' : 'black px-5 py-2'
+                    isActive ? 'text-amber-500 px-5 py-2 rounded-xl bg-[#f8c92d3a]' : 'black px-5 py-2'
                 }
                 >
                     Contact
