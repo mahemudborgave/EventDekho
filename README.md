@@ -1,11 +1,11 @@
-#Frontend - client 
+# Frontend - client 
 
 ```
 bun install
 bun run dev
 ```
 
-#Backend - server 
+# Backend - server 
 ```
 bun install
 bun run dev
