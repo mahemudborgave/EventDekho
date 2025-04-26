@@ -3,8 +3,6 @@
 Inline `code`
 
 ```run
-// Code block
-console.log("Hello");
 
 bun install
 bun run dev
