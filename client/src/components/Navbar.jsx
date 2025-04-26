@@ -54,6 +54,7 @@ function Navbar() {
             >Log in
             </Link>
             <Link
+            to="/register"
             >Sign up
             </Link>
         </ul>
