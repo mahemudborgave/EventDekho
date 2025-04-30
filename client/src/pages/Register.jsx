@@ -4,6 +4,13 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 import dotenv from "dotenv";
 import { Link } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import PasswordIcon from '@mui/icons-material/Password';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailIcon from '@mui/icons-material/Mail';
+import PersonIcon from '@mui/icons-material/Person';
+import Face6Icon from '@mui/icons-material/Face6';
 
 function Register() {
 
@@ -20,7 +27,8 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rpassword, setRPassword] = useState('');
-
+    const [role, setRole] = useState(null);
+    
     const handleChange = (e) => {
         if(e.target.name == 'name') {
             setName(e.target.value);
@@ -50,7 +58,7 @@ function Register() {
                 toast.warn("Password does not match");
             }
             else {
-                const res = await axios.post(`${baseURL}:${port}/login/register`, {name, email, password})
+                const res = await axios.post(`${baseURL}:${port}/login/register`, {name, email, password, role})
                 // console.log(res);
                 toast.success("Sign Up successful");
             }
@@ -71,21 +79,69 @@ function Register() {
     
     return (
         <>
-        <div className='flex w-[900px] border absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-            <div className='w-[50%] flex justify-center items-center'>
+        <div className='flex w-[900px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-[5px_5px_20px_rgba(0,0,0,0.3)]'>
+            <div 
+            className='w-[50%] flex justify-center items-center text-white font-bold' 
+            style={{
+                background: 'linear-gradient(90deg, hsla(34, 100%, 54%, 1) 2%, hsla(39, 100%, 58%, 1) 53%, hsla(43, 100%, 60%, 1) 87%)'
+  }}>
                 <p className='text-3xl'>Welcome !</p>
             </div>
-            <div className='p-10'>
-                <p>Sign Up</p>
-                <p>Welcome ! Please create your account</p>
+            <div className='p-20 w-1/2'>
+                <p className='text-amber-300 font-bold text-3xl mb-4'>Sign Up</p>
+                <p className='mb-6'>Welcome ! Please create your account</p>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" placeholder='Enter your name' className='block' onChange={handleChange} required/>
-                    <input type="email" name="email" id="" placeholder='Enter your email' className='block' onChange={handleChange} required/>
-                    <input type="password" name="password" placeholder='Enter password' className='block' onChange={handleChange} required/>
-                    <input type="password" name="rpassword" placeholder='Reenter password' className='block' onChange={handleChange} required/>
-                    <input type="submit" value="Create Account" />
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-4 p-2 '>
+                        <Face6Icon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="text" name="name" placeholder='Enter your name' className='block focus:outline-0 text-sm' onChange={handleChange} required/>
+                    </div>
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-4 p-2 '>
+                        <MailIcon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="email" name="email" id="" placeholder='Enter your email' className='block focus:outline-0 text-sm' onChange={handleChange} required/>
+                    </div>
+                    <div className='flex justify mb-4'>
+                        <label 
+                            htmlFor="student" 
+                            className={`p-2 text-sm mr-2 flex items-center grow ${role === 'student' ? 'bg-gray-300 border border-gray-400' : 'bg-gray-100'}`}>
+                            <input 
+                                type="radio" 
+                                name="role" 
+                                id="student" 
+                                value="student"
+                                required
+                                className='appearance-none mr-2 w-3 h-3 border border-gray-500 checked:bg-gray-400' 
+                                checked={role === "student"} 
+                                onChange={(e) => setRole(e.target.value)}/>
+                            Student
+                        </label>
+                        <label 
+                            htmlFor="organizer" 
+                            className={`p-2 text-sm flex items-center grow ${role === "organizer" ? 'bg-gray-300 border border-gray-400' : 'bg-gray-100'}`}>
+                            <input 
+                                type="radio" 
+                                name="role" id="organizer" value="organizer"
+                                className='appearance-none mr-2 w-3 h-3 border border-gray-500 checked:bg-gray-400' 
+                                checked={role === "organizer"} 
+                                onChange={(e) => setRole(e.target.value)}/>
+                            Organizer
+                        </label>
+                    </div>
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-4 p-2 '>
+                        <PasswordIcon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="password" name="password" placeholder='Enter password' className='block focus:outline-0 text-sm' onChange={handleChange} required/>
+                    </div>
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-4 p-2 '>
+                        <PasswordIcon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="password" name="rpassword" placeholder='Reenter password' className='block focus:outline-0 text-sm' onChange={handleChange} required/>
+                    </div>              
+                    
+                    <Button 
+                        type="submit" 
+                        variant="contained" 
+                        sx={{ backgroundColor: '#FF9C16', mb: 2, display: 'block', fontWeight: 'bold', color: '#fff', width:'100%'}}
+                    >Register</Button>
                 </form>
-                <Link to='/login'>Login Here</Link>
+                <Link to='/login' className='text-[#8d8d8d] group text-sm'>Have account ? <span className='group-hover:text-amber-500'>Login Here</span></Link>
                 
             </div>
         </div>

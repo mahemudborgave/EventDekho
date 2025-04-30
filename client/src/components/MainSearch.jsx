@@ -2,7 +2,7 @@ import React from 'react'
 
 function MainSearch() {
   return (
-    <div class='text-center py-10'>
+    <div className='text-center py-10'>
       <p className='text-7xl px-[200px] font-medium' style={{ fontFamily: "'Source Serif 4', sans-serif" }}>Discover the india's <br/>top events</p>
       <p className='py-10'>Explore work from the most talented and accomplished designers   <br/>ready to take on your next project</p>
 

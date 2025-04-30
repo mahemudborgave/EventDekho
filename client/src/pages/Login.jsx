@@ -4,6 +4,10 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 import dotenv from "dotenv";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import PasswordIcon from '@mui/icons-material/Password';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailIcon from '@mui/icons-material/Mail';
 
 function Login() {
 
@@ -33,10 +37,17 @@ function Login() {
         e.preventDefault();
         try {
             const res = await axios.post(`${baseURL}:${port}/login/login`, {email, password})
-            // console.log(res);
-            toast.success("Logged In");
-            navigate('/');
-            
+  
+            if (res.data.username) {
+                localStorage.setItem('username', res.data.username);
+                toast.success("Logged In");
+            } else {
+                toast.error("Login failed: No username received");
+            }
+
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
         }
         catch(error) {
             if (error.response) {
@@ -50,29 +61,44 @@ function Login() {
             }
         }
     }
-
     
     return (
         <>
-        <div className='flex w-[900px] border absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-            <div className='w-[50%] flex justify-center items-center'>
+        <div className='flex w-[900px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-[5px_5px_20px_rgba(0,0,0,0.3)]'>
+            <div className='w-[50%] flex justify-center items-center text-white font-bold'
+            style={{
+                background: 'linear-gradient(90deg, hsla(34, 100%, 54%, 1) 2%, hsla(39, 100%, 58%, 1) 53%, hsla(43, 100%, 60%, 1) 87%)'
+  }}>
                 <p className='text-3xl'>Welcome back!</p>
             </div>
-            <div className='p-10'>
-                <p>Log In</p>
-                <form onSubmit={handleSubmit}>                    
-                    <input type="email" name="email" id="" placeholder='Enter your email' className='block' onChange={handleChange} required/>
-                    <input type="password" name="password" placeholder='Enter password' className='block' onChange={handleChange} required/>
-                    <input type="submit" value="Log In" />
+            <div className='p-20 w-1/2'>
+                <p className='text-amber-300 font-bold text-3xl mb-4'>Log In</p>
+                <p className='mb-6'>Welcome ! Please enter your detail</p>
+                <form onSubmit={handleSubmit}>   
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-4 p-2 '>
+                        <MailIcon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="email" name="email" id="" placeholder='Enter your email' className='focus:outline-0 text-sm grow' onChange={handleChange} required/>
+                    </div>
+                    <div className='flex items-center justify-start bg-gray-100 w-full mb-7 p-2 '>
+                        <PasswordIcon sx={{fontSize: 20}} className='mr-2 text-[#7c7c7c]'/>                  
+                        <input type="password" name="password" placeholder='Enter password' className='block focus:outline-0 text-sm grow' onChange={handleChange} required/>
+                    </div>
+                    
+                    <Button 
+                        type="submit" 
+                        variant="contained" 
+                        sx={{ backgroundColor: '#FF9C16', mb: 2, display: 'block', fontWeight: 'bold', color: '#fff', width:'100%'}}
+                    >Login</Button>
                 </form>
-                <Link to='/register'>New User ? Register</Link>
+                <Link to='/register' className='text-[#8d8d8d] group text-sm'>New User ? <span className='group-hover:text-amber-500'>Register</span></Link>
+                <span></span>
                 
             </div>
         </div>
 
         <ToastContainer />
         </>
-        
+
     )
 }
 

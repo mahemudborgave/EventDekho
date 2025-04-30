@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
     try {
-        const {name, email, password} = req.body;
+        const {name, email, password, role} = req.body;
 
         const ifUserExist = await User.findOne({email});
         if(ifUserExist) {
@@ -18,7 +18,8 @@ router.post('/register', async (req, res) => {
         const newUser = new User( {
             name,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            role
         })
 
         await newUser.save();
@@ -46,8 +47,13 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message : "Incorrect Password"})
         }
 
-        res.status(200).json({message:"Login Successful"});
-        navi
+        console.log(isUserExist.name);
+        res.status(200).json(
+            {
+                message:"Login Successful",
+                username: isUserExist.name,
+            }
+        );
     }
     catch (error) {
         console.log(error.message);
