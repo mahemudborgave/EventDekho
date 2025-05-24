@@ -84,7 +84,13 @@ function Navbar() {
                 </Link>
                 </>
             ) : (
-                <span className='font-medium text-md'>Welcome, <span className='text-amber-400'>{user}</span><span onClick={handleLogout}><LogoutIcon sx={{ fontSize: 35, borderRadius: 2, transition: 'background-color 0.2s ease-in-out' }} className='bg-amber-400 text-amber-50 p-2 ml-3 cursor-pointer hover:bg-amber-300 hover:outline-5 hover:outline-amber-100 hover:outline-offset-2'/></span></span>
+                <span className='font-medium text-md'
+                    >Welcome, 
+                    <span className='text-amber-400'>{user}</span>
+                    <span onClick={handleLogout}>
+                        <LogoutIcon sx={{ fontSize: 35, borderRadius: 2, transition: 'background-color 0.2s ease-in-out' }} className='bg-amber-400 text-amber-50 p-2 ml-3 cursor-pointer hover:bg-amber-300 hover:outline-5 hover:outline-amber-100 hover:outline-offset-2'/>
+                    </span>
+                </span>
             )
             }
         </ul>

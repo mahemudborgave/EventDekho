@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import sample from "./routes/sample.js";
 import login from './routes/login.js';
+import eventt from './routes/eventt.js'
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/sample', sample);
 app.use('/login', login);
+app.use('/eventt', eventt);
 
 connectDB();
 

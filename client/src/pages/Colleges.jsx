@@ -1,14 +1,40 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { backIn, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-const data = [
-  { id:1, code: 6012, collegename: "IIT, Vishrambaug", events: "8"},
-  { id:2, code: 6012, collegename: "IIT, Vishrambaug", events: "8"},
-  { id:3, code: 6012, collegename: "IIT, Vishrambaug", events: "8"},
-];
+import axios from 'axios';
+import {HashLoader, ScaleLoader} from 'react-spinners'
+import CollegeDetails from "./CollegeDetails";
 
 export default function colleges() {
+
+  const [colleges, setColleges] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const baseURL = import.meta.env.VITE_BASE_URL;
+  const port = import.meta.env.VITE_PORT;
+
+  useEffect(() => {
+    const getColleges = async () => {
+      try {
+        const res = await axios.get(`${baseURL}:${port}/eventt/getcolleges`)
+        setColleges(res.data);
+      }
+      catch (err) {
+          console.error('Error fetching colleges:', err);
+      } finally {
+        setLoading(false);
+      }   
+    }
+    getColleges();    
+  },[])
+
+  if(loading) {
+    return (
+      <div className="flex justify-center items-center p-10">
+        <HashLoader />
+      </div>
+    )
+  }
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto px-[200px]">
       <div className="bg-white shadow-xl overflow-hidden w-full">
@@ -28,12 +54,14 @@ export default function colleges() {
             </tr>
           </thead>
           <tbody>
-            {data.map((college, i) => (
-              <tr key={college.id} className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-blue-50`}>
-                <td className="p-4">{college.code}</td>
-                <td className="p-4">{college.collegename}</td>
-                <td className="p-4">{college.events}</td>
-                <td className="p-4"><Link className="inline-block px-5 py-2 bg-[#0d0c22] rounded-full text-white">View</Link></td>
+            {colleges.map((college, i) => (
+              <tr key={college._id} className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-blue-50`}>
+                <td className="p-4">{college.collegeCode}</td>
+                <td className="p-4">{college.collegeName}</td>
+                <td className="p-4">{college.collegeEventCount}</td>
+                <td className="p-4">
+                  <Link to={`/collegeDetails/${college.collegeCode}`} className="inline-block px-5 py-2 bg-[#0d0c22] rounded-full text-white">View Events</Link>
+                </td>
               </tr>
             ))}
           </tbody>

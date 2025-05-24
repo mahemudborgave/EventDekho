@@ -11,6 +11,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonIcon from '@mui/icons-material/Person';
 import Face6Icon from '@mui/icons-material/Face6';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function Register() {
 
@@ -109,9 +110,10 @@ function Register() {
                                 id="student" 
                                 value="student"
                                 required
-                                className='appearance-none mr-2 w-3 h-3 border border-gray-500 checked:bg-gray-400' 
+                                className='appearance-none' 
                                 checked={role === "student"} 
                                 onChange={(e) => setRole(e.target.value)}/>
+                            {role === 'student' ? <CheckCircleIcon className='mr-2' sx={{fontSize: 20}}/> : null}                            
                             Student
                         </label>
                         <label 
@@ -120,9 +122,10 @@ function Register() {
                             <input 
                                 type="radio" 
                                 name="role" id="organizer" value="organizer"
-                                className='appearance-none mr-2 w-3 h-3 border border-gray-500 checked:bg-gray-400' 
+                                className='appearance-none' 
                                 checked={role === "organizer"} 
                                 onChange={(e) => setRole(e.target.value)}/>
+                            {role === 'organizer' ? <CheckCircleIcon className='mr-2' sx={{fontSize: 20}}/> : null}
                             Organizer
                         </label>
                     </div>

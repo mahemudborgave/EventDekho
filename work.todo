@@ -1,0 +1,58 @@
+{
+  "todotree": {
+    "tree": [
+      {
+        "key": 1747636412673,
+        "children": [],
+        "todo": {
+          "content": "1. List event under college",
+          "id": 1747636412673,
+          "level": "default",
+          "done": false,
+          "start": 1747636412673,
+          "focus": false,
+          "end": 1747636534402
+        }
+      },
+      {
+        "key": 1747636464853,
+        "children": [],
+        "todo": {
+          "content": "2. event detail page",
+          "id": 1747636464853,
+          "level": "default",
+          "done": false,
+          "start": 1747636464853,
+          "focus": false,
+          "end": 1747636535105
+        }
+      },
+      {
+        "key": 1747636512871,
+        "children": [],
+        "todo": {
+          "content": "3. Dashboard",
+          "id": 1747636512871,
+          "level": "default",
+          "done": false,
+          "start": 1747636512871,
+          "focus": false,
+          "end": 1747636535753
+        }
+      }
+    ],
+    "expandKeys": [],
+    "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
+    "add_mode": "bottom",
+    "virtual": false,
+    "timelines": [],
+    "showLine": false,
+    "playFontSize": 24,
+    "title": "work",
+    "autoSort": false,
+    "showEndTime": false,
+    "simpleMode": false,
+    "lang": "en",
+    "version": "1747636538838"
+  }
+}

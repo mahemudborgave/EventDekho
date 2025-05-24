@@ -9,6 +9,7 @@ import Colleges from './pages/Colleges.jsx'
 import Contact from './pages/Contact.jsx'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
+import CollegeDetails from './pages/CollegeDetails.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
         <Route path='/events' element={<Events />} />
         <Route path='/colleges' element={<Colleges />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/collegeDetails/:code' element={<CollegeDetails />} />
       </Route>
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
