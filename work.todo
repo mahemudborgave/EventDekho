@@ -8,10 +8,10 @@
           "content": "1. List event under college",
           "id": 1747636412673,
           "level": "default",
-          "done": false,
+          "done": true,
           "start": 1747636412673,
           "focus": false,
-          "end": 1747636534402
+          "end": 1748360750223
         }
       },
       {
@@ -21,10 +21,10 @@
           "content": "2. event detail page",
           "id": 1747636464853,
           "level": "default",
-          "done": false,
+          "done": true,
           "start": 1747636464853,
           "focus": false,
-          "end": 1747636535105
+          "end": 1748360755933
         }
       },
       {
@@ -38,6 +38,30 @@
           "start": 1747636512871,
           "focus": false,
           "end": 1747636535753
+        }
+      },
+      {
+        "key": 1748360762145,
+        "children": [],
+        "todo": {
+          "content": "4. event participation page",
+          "id": 1748360762145,
+          "level": "default",
+          "done": true,
+          "start": 1748360762146,
+          "focus": false,
+          "end": 1749378844643
+        }
+      },
+      {
+        "key": 1749378847150,
+        "children": [],
+        "todo": {
+          "content": "reigstered tag",
+          "id": 1749378847150,
+          "level": "default",
+          "done": false,
+          "start": 1749378847150
         }
       }
     ],
@@ -53,6 +77,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1747636538838"
+    "version": "1749378856376"
   }
 }

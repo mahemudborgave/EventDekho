@@ -4,6 +4,7 @@ import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import { HashLoader } from 'react-spinners';
 import axios from 'axios';
 import Eventt from '../components/Eventt';
+import FooterComp from '../components/FooterComp';
 
 function CollegeDetails() {
   const { code } = useParams();
@@ -14,7 +15,7 @@ function CollegeDetails() {
   const baseURL = import.meta.env.VITE_BASE_URL;
   const port = import.meta.env.VITE_PORT;
 
-  console.log(code)
+  // console.log(code)
 
   useEffect(() => {
 
@@ -34,7 +35,7 @@ function CollegeDetails() {
     const fetchCollegeEvent = async () => {
         try {
             const res = await axios.get(`${baseURL}:${port}/eventt/getevents/${code}`);
-            console.log(res.data)
+            // console.log(res.data)
             setCollegeEvents(res.data);
         }
         catch (err) {
@@ -56,46 +57,27 @@ function CollegeDetails() {
     );
   }
 
-//   const collegeEventss = [{
-//     _id: "6812a7c87da683d37569929c",
-//     collegeCode: "1001",
-//     collegeName: "Walchand College of Engineering, Sangli",
-//     eventName: "Tech Symposium 2025",
-//     eventLocation: "Main Auditorium, Block A",
-//     eventDate: "2025-05-15T00:00:00.000Z",
-//     postedOn: "2025-04-30T00:00:00.000Z",
-//     closeOn: "2025-05-10T00:00:00.000Z"
-//   },
-//   {
-//     _id: "6812a7c87da683d37569929c",
-//     collegeCode: "1001",
-//     collegeName: "Walchand College of Engineering, Sangli",
-//     eventName: "Tech Symposium 2025",
-//     eventLocation: "Main Auditorium, Block A",
-//     eventDate: "2025-05-15T00:00:00.000Z",
-//     postedOn: "2025-04-30T00:00:00.000Z",
-//     closeOn: "2025-05-10T00:00:00.000Z"
-//   },
-// ];
-
-
   if (!college) {
     return <div>College not found</div>;
   }
 
   return (
     <>
-        <div className='mb-8 px-[200px] flex'>
+        <div className='mb-8 px-[200px]'>
             {/* <div className='bg-gray-600 w-20 h-20 rounded-3xl mr-3'><img src="" alt="" /></div> */}
-            <div className='w-full'>
-                <p className='text-amber-400 text-4xl mb-2'>{college.collegeName}</p>
-                <span className='text-gray-500 border px-4 text-violet-500 mr-2'>Code - {college.collegeCode}</span>
-                <span className='text-gray-500 border px-4 text-green-500'> Total events - {college.collegeEventCount}</span>
-                <p className='mt-7'>Event list </p>
-                <hr className='w-full'/>
+            <div className='w-full bg-gray-200 p-10'>
+                <p className='text-amber-600 text-4xl mb-4'>{college.collegeName}</p>
+                <span className='border px-4 text-violet-500 mr-2'>Code - {college.collegeCode}</span>
+                <span className='border px-4 text-green-500'> Total events - {college.collegeEventCount}</span>
             </div>  
+            <p className='my-7'>Event list ...</p>
+              <Eventt events={collegeEvents}/>
+            <div className='mx-30'>
+            </div>
         </div>
-        <Eventt events={collegeEvents}/>
+
+        <FooterComp />
+
     </>
   )
 }

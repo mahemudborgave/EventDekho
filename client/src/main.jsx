@@ -10,21 +10,31 @@ import Contact from './pages/Contact.jsx'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import CollegeDetails from './pages/CollegeDetails.jsx'
+import EventDetail from './pages/EventDetail.jsx'
+import StudentProfile from './pages/StudentProfile.jsx'
+import MyParticipations from './pages/MyParticipations.jsx'
+import App2 from './App2.jsx'
+import Home from './pages/Home.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<App />}>
-        <Route path='' element={<MainSearch />} />
-        <Route path='/events' element={<Events />} />
-        <Route path='/colleges' element={<Colleges />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/collegeDetails/:code' element={<CollegeDetails />} />
+        <Route path='' element={<App2 />}>
+          <Route path='' element={<Home />} />
+          <Route path='/events' element={<Events />} />
+          <Route path='/colleges' element={<Colleges />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/collegeDetails/:code' element={<CollegeDetails />} />
+          <Route path='/eventdetail/:eventId' element={<EventDetail />} />
+          <Route path='/studentprofile' element={<StudentProfile />} />
+          <Route path='/myparticipations' element={<MyParticipations />} />
+        </Route>
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
       </Route>
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
     </>
-    
+
   )
 )
 

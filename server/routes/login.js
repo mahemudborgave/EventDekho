@@ -1,7 +1,12 @@
 import express from "express";
 import User from "../models/user.js";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import cors from 'cors'
+import dotenv from "dotenv";
+dotenv.config();
 
+const secret = process.env.JWT_SECRET;
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
@@ -47,11 +52,20 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message : "Incorrect Password"})
         }
 
+        const token = await jwt.sign(
+            {
+                username:isUserExist.name,
+                role: isUserExist.role
+            },
+            secret
+        );
+
         console.log(isUserExist.name);
         res.status(200).json(
             {
                 message:"Login Successful",
-                username: isUserExist.name,
+                user: isUserExist,
+                token
             }
         );
     }

@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import Eventt from './Eventt';
+import { Typewriter } from 'react-simple-typewriter'
+import Search from './Search';
 
 function MainSearch() {
   const baseURL = import.meta.env.VITE_BASE_URL;
@@ -10,14 +12,15 @@ function MainSearch() {
   const [events, setEvents] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    const fetchEvents = async() => {
+    const fetchEvents = async () => {
       try {
         const res = await axios.get(`${baseURL}:${port}/eventt/getevents`)
         setEvents(res.data);
-      }catch (err) {
+      } catch (err) {
         console.error('Error fetching events:', err);
       } finally {
         setLoading(false);
@@ -25,51 +28,63 @@ function MainSearch() {
     }
 
     fetchEvents();
-  }, []) 
+  }, [])
+
+  const handleClick = (e) => {
+    navigate('/events')
+  }
 
   const handleChange = (e) => {
-    const value = e.target.value;  
-
-    if (value.trim() === '') {
-      setSearchResults([]);
-      return;
-    }
-
-    const result = events.filter(event => 
-      event.eventName.toLowerCase().includes(value.toLowerCase()) ||
-      event.collegeName.toLowerCase().includes(value.toLowerCase()) ||
-      event.collegeCode.toLowerCase().includes(value.toLowerCase())
-    )     
-    setSearchResults(result);
+    navigate('/events')
   }
 
   return (
-    <div className='text-center py-10'>
-      <p className='text-7xl px-[200px] font-medium' style={{ fontFamily: "'Source Serif 4', sans-serif" }}>Discover the india's <br/>top <span className='text-amber-400'> college & technical </span>events</p>
-      <p className='py-10'>Explore events from the most vibrant and creative colleges
-      <br/>ready to inspire and engage your next experience</p>
+    <>
+      <div className='text-center'>
+        <p
+          className='text-5xl font-medium' style={{ fontFamily: "'Source Serif 4', sans-serif" }}
+        >
+          Discover India's&nbsp;
 
-      <div className='py-2 px-4 bg-[#e7e7e7ad] w-[750px] m-auto rounded-full flex'>
-        <input type="text" placeholder="Search for event, college, etc" className='focus:outline-none outline-0 flex-grow ml-2 text-md' onChange={handleChange}/>
-        <i className="fa-solid fa-magnifying-glass p-4 bg-amber-300 rounded-full"></i>
-      </div>
+          <span className='text-amber-400'> best&nbsp;
+            <Typewriter
+              words={['college', 'technical', 'social']}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={80}
+              deleteSpeed={50}
+              delaySpeed={500}
+            />
+            <br />
+          </span>
+          events, <span className='text-amber-400'>all</span> in one place
+        </p>
+        <p className='py-10'>Explore events from the most vibrant and creative colleges
+          <br />ready to inspire and engage your next experience</p>
 
-      <div className='flex justify-center gap-2 py-6 text-sm text-[#535353]'>
-        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full border'>Technical</p>
-        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>Nontechnical</p>
-        <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>social</p>
-      </div>
 
-      {loading && (
-        <div className="flex justify-center items-center">
-        <HashLoader />
-      </div>
-      )}
+        <div onClick={handleClick}>
+          <Search handleChange={handleChange} />
+        </div>
 
-      <div className='px-[200px] text-left'>
-        <Eventt events={searchResults}/>            
+        <div className='flex justify-center gap-2 py-6 text-sm text-[#535353]'>
+          <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full border'>Technical</p>
+          <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>Nontechnical</p>
+          <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>social</p>
+        </div>
+
+        {loading && (
+          <div className="flex justify-center items-center">
+            <HashLoader />
+          </div>
+        )}
+
       </div>
-    </div>
+      <div className='absolute h-200 block z-99'>
+        <Eventt events={searchResults} />
+      </div>
+    </>
   )
 }
 

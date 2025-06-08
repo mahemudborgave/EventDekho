@@ -1,6 +1,7 @@
 import express from 'express';
 import Eventt from '../models/eventt.js';
 import College from '../models/college.js';
+import EventRegistration from '../models/eventRegistration.js';
 const router = express.Router();
 
 
@@ -51,6 +52,19 @@ router.get('/getevents/:code', async (req, res) => {
     }
 })
 
+router.get('/getevent/:eventId', async (req, res) => {
+    try{
+        const eventId = req.params.eventId.trim();
+        const event = await Eventt.findOne({ _id: eventId });
+        console.log(event);
+        res.status(200).json(event);
+    }
+    catch(error) {
+        console.log(error.message)
+        res.status(500).send("Error getting specific event");
+    }
+})
+
 router.get('/getcolleges', async (req, res) => {
     try{
         const colleges = await College.find();
@@ -74,5 +88,58 @@ router.get('/getcollege/:code', async (req, res) => {
         res.status(500).send("Error getting specific college");
     }
 })
+
+
+// Event registration /api
+
+router.post('/registerevent', async (req, res) => {    
+  try {
+    // console.log(req.body);
+    
+    const registration = new EventRegistration(req.body);
+    
+    await registration.save();
+    res.status(201).json({ message: 'Registration successful', data: registration });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
+  }
+});
+
+router.post('/geteventsfromemail', async (req, res) => {
+  try {
+    const email = req.body.email;
+    const data = await EventRegistration.find({ email }); // Ensure you store 'email' during registration
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+})
+
+// Delete event api
+
+router.post('/deleteRegistration', async (req, res) => {
+    console.log("some");
+    
+  const { eventId, email } = req.body;
+
+  if (!eventId || !email) {
+    return res.status(400).json({ error: 'Missing eventId or email' });
+  }
+
+  try {
+    const result = await EventRegistration.findOneAndDelete({ eventId, email });
+
+    if (!result) {
+      return res.status(404).json({ error: 'Registration not found' });
+    }
+
+    res.json({ message: 'Registration deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting registration:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 
 export default router;

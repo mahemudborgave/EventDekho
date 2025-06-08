@@ -38,6 +38,11 @@ const eventSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
+        eventDescription: {
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
     { timestamps: true }
 )

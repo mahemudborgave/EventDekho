@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState, useEffect, createContext } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import UserContext from './context/UserContext'
+import 'react-toastify/dist/ReactToastify.css';
+import SearchContext from './context/SearchContext'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState("md");
+  const [email, setEmail] = useState("md");
+  const [searchValue, setSearchValue] = useState("");
+  // console.log("Jethalal");
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const storedEmail = localStorage.getItem("email");
 
+    if (storedUser) setUser(storedUser);
+    if (storedEmail) setEmail(storedEmail);
+  }, []);
   return (
     <>
-    <Navbar />
-    <Outlet />
-    <ToastContainer />
+      <UserContext.Provider value={{ user, setUser, email, setEmail}} >
+        <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+          <Outlet />
+          <ToastContainer />
+        </SearchContext.Provider>
+      </UserContext.Provider>
     </>
   )
 }
