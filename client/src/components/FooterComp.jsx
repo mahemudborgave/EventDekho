@@ -9,9 +9,9 @@ function FooterComp() {
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo and Tagline */}
         <div>
-          <Link to='/' className='font-bold text-xl'><img src={eventdekhoLogo} alt="logo" className='h-15'/></Link>
+          <Link to='/' className='font-bold text-xl hidden lg:block'><img src={eventdekhoLogo} alt="logo" className='h-15'/></Link>
           <p className="mt-2 text-sm">India's largest college event platform.</p>
-          <p className="mt-2 text-sm">Designed and developed by mahemud ❤️</p>
+          
         </div>
 
         {/* Navigation */}
@@ -60,8 +60,9 @@ function FooterComp() {
         </div>
       </div>
 
+
       <div className="text-center text-sm bg-gray-300 py-4">
-        © {new Date().getFullYear()} EventDekho. All rights reserved.
+        © {new Date().getFullYear()} EventDekho. All rights reserved. <br></br>{"{"} Designed by mahemud ❤️ {"}"}
       </div>
     </footer>
   );

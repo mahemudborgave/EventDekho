@@ -11,25 +11,25 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
     try {
-        const {name, email, password, role} = req.body;
+        const { name, email, password, role } = req.body;
 
-        const ifUserExist = await User.findOne({email});
-        if(ifUserExist) {
-            return res.status(400).json({message : "User already exist !"})
+        const ifUserExist = await User.findOne({ email });
+        if (ifUserExist) {
+            return res.status(400).json({ message: "User already exist !" })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const newUser = new User( {
+        const newUser = new User({
             name,
             email,
-            password:hashedPassword,
+            password: hashedPassword,
             role
         })
 
         await newUser.save();
 
-        res.status(200).json({message:"Sign Up Successful"});
+        res.status(200).json({ message: "Sign Up Successful" });
     }
     catch (error) {
         console.log(error.message);
@@ -39,22 +39,22 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
-        const isUserExist = await User.findOne({email});
-        if(! isUserExist) {
-            return res.status(400).json({message : "User does not exist !"})
+        const isUserExist = await User.findOne({ email });
+        if (!isUserExist) {
+            return res.status(400).json({ message: "User does not exist !" })
         }
 
         const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
 
-        if(!isPasswordMatch) {
-            return res.status(400).json({message : "Incorrect Password"})
+        if (!isPasswordMatch) {
+            return res.status(400).json({ message: "Incorrect Password" })
         }
 
         const token = await jwt.sign(
             {
-                username:isUserExist.name,
+                username: isUserExist.name,
                 role: isUserExist.role
             },
             secret
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
         console.log(isUserExist.name);
         res.status(200).json(
             {
-                message:"Login Successful",
+                message: "Login Successful",
                 user: isUserExist,
                 token
             }

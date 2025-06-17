@@ -42,10 +42,10 @@ function MainSearch() {
     <>
       <div className='text-center'>
         <p
-          className='text-5xl font-medium' style={{ fontFamily: "'Source Serif 4', sans-serif" }}
+          className='my-10 lg:my-0 text-3xl md:text-5xl font-medium' style={{ fontFamily: "'Source Serif 4', sans-serif" }}
         >
           Discover India's&nbsp;
-
+          <br></br>
           <span className='text-amber-400'> best&nbsp;
             <Typewriter
               words={['college', 'technical', 'social']}
@@ -60,15 +60,15 @@ function MainSearch() {
           </span>
           events, <span className='text-amber-400'>all</span> in one place
         </p>
-        <p className='py-10'>Explore events from the most vibrant and creative colleges
+        <p className='py-10 hidden lg:block'>Explore events from the most vibrant and creative colleges
           <br />ready to inspire and engage your next experience</p>
 
 
-        <div onClick={handleClick}>
+        <div onClick={handleClick} className='my-5 md:my-10 lg:my-0'>
           <Search handleChange={handleChange} />
         </div>
 
-        <div className='flex justify-center gap-2 py-6 text-sm text-[#535353]'>
+        <div className='hidden lg:flex items-center lg:flex-row justify-center gap-2 my-3 text-sm text-[#535353]'>
           <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full border'>Technical</p>
           <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>Nontechnical</p>
           <p className='py-1 px-6 bg-[#e7e7e7ad] rounded-full'>social</p>

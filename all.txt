@@ -1,0 +1,1 @@
+mongorestore --uri "mongodb+srv://mahemud:mahemud@cluster0.y3zrjtm.mongodb.net/eventdekho" "./backup"

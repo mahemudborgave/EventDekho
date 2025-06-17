@@ -14,16 +14,16 @@ function Events() {
   const port = import.meta.env.VITE_PORT;
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {searchValue, setSearchValue} = useContext(SearchContext);
+  const { searchValue, setSearchValue } = useContext(SearchContext);
   const [originalEvents, setOriginalEvents] = useState([]);
 
   useEffect(() => {
-    const fetchEvents = async() => {
+    const fetchEvents = async () => {
       try {
         const res = await axios.get(`${baseURL}:${port}/eventt/getevents`)
         setEvents(res.data);
         setOriginalEvents(res.data);
-      }catch (err) {
+      } catch (err) {
         console.error('Error fetching events:', err);
       } finally {
         setLoading(false);
@@ -33,21 +33,21 @@ function Events() {
     fetchEvents();
   }, [])
 
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     const value = e.target.value;
     console.log(value);
     setSearchValue(value);
-    
+
     if (value.trim() === '') {
       setEvents(originalEvents);
       return;
     }
 
-    const result = originalEvents.filter(event => 
+    const result = originalEvents.filter(event =>
       event.eventName.toLowerCase().includes(value.toLowerCase()) ||
       event.collegeName.toLowerCase().includes(value.toLowerCase()) ||
       event.collegeCode.toLowerCase().includes(value.toLowerCase())
-    )     
+    )
     setEvents(result);
   }
 
@@ -56,7 +56,7 @@ function Events() {
     setEvents(originalEvents);
   }
 
-  if(loading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center p-10">
         <HashLoader />
@@ -64,18 +64,26 @@ function Events() {
     )
   }
 
-  
+
+
   return (
     <>
-    <div className='px-[200px]'>
-      <div className='px-30'> 
-        <div className='w-1/2 mb-10'>
-          <Search handleChange={handleChange} handleClick={handleClick}/>
+        <div className= 'lg:px-30'>
+          
+          <div className='lg:w-1/2 mb-10'>
+            <Search handleChange={handleChange} handleClick={handleClick} />
+          </div>
+
+          {(events.length === 0 ? (
+            <div className="text-center mt-20 text-gray-500 text-lg">
+              No matching events found.
+            </div>
+          )
+            : <Eventt events={events} />)
+          }
+
         </div>
-        <Eventt events={events}/>
-      </div>
-      <div className='h-20'></div>
-    </div>
+        <div className='h-81'></div>
     </>
   )
 }

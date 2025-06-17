@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const eventSchema = mongoose.Schema(
     {
+        email: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         eventName: {
             type: String,
             required: true,
@@ -12,11 +17,11 @@ const eventSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
-        collegeCode : {
+        collegeCode: {
             type: String,
             required: true,
             minlength: 4,
-            trim: true, 
+            trim: true,
         },
         eventDate: {
             type: Date,
@@ -30,8 +35,7 @@ const eventSchema = mongoose.Schema(
         },
         postedOn: {
             type: Date,
-            required: true,
-            trim: true,
+            default: Date.now
         },
         closeOn: {
             type: Date,

@@ -14,6 +14,7 @@ function Login() {
 
     const { user, setUser } = useContext(UserContext);
     const { email, setEmail } = useContext(UserContext);
+    const { token, setToken } = useContext(UserContext);
     const [password, setPassword] = useState('');
 
     const handleChange = (e) => {
@@ -36,7 +37,8 @@ function Login() {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('username', res.data.user.name);
                 localStorage.setItem('email', res.data.user.email);
-                setUser(res.data.username);
+                setUser(res.data.user.name);
+                setToken(res.data.token);
                 console.log((user));
                 toast.success("Logged In!", {
                     autoClose: 1000
@@ -66,14 +68,14 @@ function Login() {
 
     return (
         <>
-            <div className='flex w-[900px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-[5px_5px_20px_rgba(0,0,0,0.3)]'>
-                <div className='w-[50%] flex justify-center items-center text-white font-bold'
+            <div className='flex lg:w-[900px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:shadow-[5px_5px_20px_rgba(0,0,0,0.3)] w-full'>
+                <div className='hidden w-[50%] lg:flex justify-center items-center text-white font-bold'
                     style={{
                         background: 'linear-gradient(90deg, hsla(34, 100%, 54%, 1) 2%, hsla(39, 100%, 58%, 1) 53%, hsla(43, 100%, 60%, 1) 87%)'
                     }}>
                     <p className='text-3xl'>Welcome back!</p>
                 </div>
-                <div className='p-20 w-1/2'>
+                <div className='lg:p-20 lg:w-1/2 w-[300px] border-3 border-amber-500 p-8 mx-auto'>
                     <p className='text-amber-300 font-bold text-3xl mb-4'>Log In</p>
                     <p className='mb-6'>Welcome ! Please enter your detail</p>
                     <form onSubmit={handleSubmit}>

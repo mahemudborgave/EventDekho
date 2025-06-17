@@ -5,7 +5,7 @@ import EventRegistration from '../models/eventRegistration.js';
 const router = express.Router();
 
 
-router.post('/addevent', async (req, res) => {
+router.post('/add-event', async (req, res) => {
     try {
         const {eventName, collegeName, eventDate, eventLocation, postedOn, closeOn} = req.body;
 
@@ -27,6 +27,17 @@ router.post('/addevent', async (req, res) => {
         res.status(500).send("Error adding event");
     }
 })
+
+router.post("/addevent", async (req, res) => {
+  try {
+    const newEvent = new Eventt(req.body);
+    await newEvent.save();
+    res.status(201).json({ message: "Event created successfully" });
+  } catch (error) {
+    console.error("Error saving event:", error);
+    res.status(500).json({ error: "Failed to create event" });
+  }
+});
 
 router.get('/getevents', async (req, res) => {
     try{
@@ -116,6 +127,16 @@ router.post('/geteventsfromemail', async (req, res) => {
   }
 })
 
+router.get('/geteventregfromeventid/:eventId', async (req, res) => {
+  try {
+    const eventId = req.params.eventId.trim();
+    const data = await EventRegistration.find({ eventId: eventId }); 
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+})
+
 // Delete event api
 
 router.post('/deleteRegistration', async (req, res) => {
@@ -140,6 +161,61 @@ router.post('/deleteRegistration', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+
+router.post('/stats', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const totalEvents = await Eventt.countDocuments({ email });
+
+    const userEvents = await Eventt.find({ email });
+    const eventIds = userEvents.map(e => e._id.toString());
+
+    const totalRegistrations = await EventRegistration.countDocuments({
+      eventId: { $in: eventIds },
+    });
+
+    const upcomingEvents = await Eventt.countDocuments({
+      email,
+      eventDate: { $gt: new Date() }
+    });
+
+    const totalColleges = await College.countDocuments();
+
+    res.status(200).json({
+      totalEvents,
+      totalRegistrations,
+      upcomingEvents,
+      totalColleges
+    });
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    res.status(500).json({ message: 'Error fetching stats' });
+  }
+}); 
+
+router.post('/checkregistered', async (req, res) => {
+  const { email, eventId } = req.body;
+
+  if (!email || !eventId) {
+    return res.status(400).json({ registered: false, message: "Missing email or eventId" });
+  }
+
+  try {
+    const registration = await EventRegistration.findOne({ email, eventId });
+    if (registration) {
+      return res.status(200).json({ registered: true });
+    } else {
+      return res.status(200).json({ registered: false });
+    }
+  } catch (err) {
+    console.error("Error checking registration:", err);
+    return res.status(500).json({ registered: false, message: "Server error" });
+  }
+});
+
+
 
 
 export default router;

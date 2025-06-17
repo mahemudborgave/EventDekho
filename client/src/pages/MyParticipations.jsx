@@ -11,23 +11,50 @@ function MyParticipations() {
   const [loading, setLoading] = useState(true);
   const baseURL = import.meta.env.VITE_BASE_URL;
   const port = import.meta.env.VITE_PORT;
+  const [textMsg, setTextMsg] = useState("You haven't registered for any events yet.");
 
   useEffect(() => {
     const fetchUserRegistrations = async () => {
-      try {
-        const res = await axios.post(`${baseURL}:${port}/eventt/geteventsfromemail`, { email });
-        setRegistrations(res.data);
-      } catch (err) {
-        console.error('Error fetching user registrations:', err);
-      } finally {
-        setLoading(false);
+      const StoredToken = localStorage.getItem("token");
+      let response;
+      console.log("here");
+
+      if (StoredToken) {
+        try {
+          response = await axios.post(`${baseURL}:${port}/userauth/verifytoken`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${StoredToken}`
+              }
+            })
+        }
+        catch (e) {
+          console.log("Error ", e)
+        }
+      }
+
+      if (StoredToken && response) {
+        try {
+          const res = await axios.post(`${baseURL}:${port}/eventt/geteventsfromemail`, { email });
+          setRegistrations(res.data);
+        } catch (err) {
+          console.error('Error fetching user registrations:', err);
+        } finally {
+          setLoading(false);
+        }
+      }
+      else {
+        setTextMsg("Log in to see the participations")
+        return false;
       }
     };
 
-    if (user) {
+    if(email) {
       fetchUserRegistrations();
     }
-  }, [user]);
+    setLoading(false);
+  }, [email]);
 
   const handleDelete = async (eventId) => {
     if (confirm("Are u sure, want to cancel registrations ?")) {
@@ -60,15 +87,15 @@ function MyParticipations() {
   if (registrations.length === 0) {
     return (
       <div className="text-center text-gray-500 mt-10">
-        You haven’t registered for any events yet.
+        {textMsg}
       </div>
     );
   }
 
   return (
-    <div className='px-[200px]'>
-      <h2 className="text-2xl font-semibold mb-6">My Registered Events</h2>
-      <div className='grid grid-cols-2 gap-6'>
+    <div>
+      <h2 className="lg:text-2xl text-lg font-semibold mb-6">My Registered Events</h2>
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 text-sm lg:text-base'>
         {registrations.map((reg, index) => (
           <div key={index} className='border p-4 rounded shadow bg-white'>
             <div className='mb-2 font-bold'>
@@ -83,14 +110,14 @@ function MyParticipations() {
 
             <div className='flex justify-start gap-3 items-center mt-3'>
               <Link
-                className='px-5 py-1 rounded-md border border-green-500 bg-green-500 text-white hover:bg-green-400'
-                to={`/eventdetail/${reg.eventId}`}  
+                className='lg:px-5 px-2 py-1 rounded-md border border-green-500 bg-green-500 text-white hover:bg-green-400'
+                to={`/eventdetail/${reg.eventId}`}
               >
                 Get Detail
               </Link>
               <button
                 onClick={() => handleDelete(reg.eventId)}
-                className='px-5 py-1 rounded-md border border-red-600 text-red-700 hover:bg-red-500 hover:text-white'
+                className='lg:px-5 px-2 py-1 rounded-md border border-red-600 text-red-700 hover:bg-red-500 hover:text-white'
               >
                 Cancel Registration
               </button>
@@ -100,6 +127,7 @@ function MyParticipations() {
           </div>
         ))}
       </div>
+      <div className='h-50'></div>
     </div>
   );
 }
